@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors('*'))
 
 app.use('/projects', routes.projects)
+app.use('/technos', routes.technos)
 
 app.listen(process.env.PORT, (err) => {
   if (err) {

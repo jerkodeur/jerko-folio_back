@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
         sql: err.sql
       })
     }
-    return res.status(200).send(result)
+    return res.status(200).json(result)
   })
 })
 
