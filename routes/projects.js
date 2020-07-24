@@ -31,13 +31,30 @@ router.get('/:id', (req, res) => {
 
 // Post a new project
 router.post('/', (req, res) => {
-  connexion.query('INSERT INTO project SET ?', (err, result) => {
-    if(err) {
+  const { project, techno } = req.body
+  project.date = new Date(project.date)
+
+  connexion.query('INSERT INTO project SET ?', project, (err, result) => {
+    if (err) {
       return res.status('500').json({
         message: err.message,
         sql: err.sql
       })
     }
+    // Add technos selected
+    let sql = 'INSERT INTO project_techno VALUES ?'
+    let listTechnos = []
+    techno && techno.map(techno => listTechnos.push([result.insertId, parseInt(techno)]))
+
+    connexion.query(sql, [listTechnos], (err, result) => {
+      if (err) {
+        return res.status(500).json({
+          server: err.message,
+          sql: err.sql
+        })
+      }
+    })
+    // return create infos to the user
     connexion.query('SELECT * FROM project WHERE id = ?', result.insertId, (err, result2) => {
       if (err) {
         return res.status('500').json({
