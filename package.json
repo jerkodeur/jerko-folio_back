@@ -4,7 +4,7 @@
   "description": "Mon portfolio (et pleins de projets dedans !) --> back side !",
   "main": "index.js",
   "scripts": {
-    "lint": "npx  eslint --fix *.js routes/",
+    "lint": "npx  eslint --fix *.js routes/ models/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
