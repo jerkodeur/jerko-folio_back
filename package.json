@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "npx  eslint --fix *.js routes/ models/",
+    "start": "node index",
+    "start:dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
