@@ -5,7 +5,7 @@ const getSelectSql = (onlyOne = false) => {
   return `
     SELECT
       project.id, title, description, image, url_github, url_test, date,
-      t.name, t.image_name
+      t.id AS tid, t.name, t.image_name
     FROM project
     JOIN project_techno pt ON pt.project_id=project.id
     JOIN techno t ON pt.techno_id=t.id
@@ -25,9 +25,10 @@ const formatResults = (result) => {
   // For each project, we create an object which receive the main datas and an array of technologies
   return idProjects.map((projectId) => {
     const rows = result.filter((el) => el.id === projectId)
-    const { name, image_name: imageName, ...mainDatas } = rows[0]
+    const { tid, name, image_name: imageName, ...mainDatas } = rows[0]
     const currentProject = { mainDatas }
-    const technos = rows.map(({ name, image_name: imageName }) => ({
+    const technos = rows.map(({ tid, name, image_name: imageName }) => ({
+      id: tid,
       name,
       image_name: imageName
     }))

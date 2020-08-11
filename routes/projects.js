@@ -44,7 +44,6 @@ router.post('/', (req, res) => {
     'url_test'
   ]
   const missingField = requiredFields.some((field) => !project[field])
-  console.log('missingField', missingField)
   if (missingField) {
     return res.status(400).json({
       message: 'A required field is missing'
