@@ -22,11 +22,10 @@ router.get('/', (req, res) => {
       })
     }
     // create a table with uniq project ids
-    const idProjects = []
-    result.map((item) => {
-      const idExist = idProjects.includes(item.id)
-      idExist ? '' : idProjects.push(item.id)
-    })
+    const idProjects = result.reduce((previousValue, item) => {
+      const idExist = previousValue.includes(item.id)
+      return idExist ? previousValue : [...previousValue, item.id]
+    }, [])
     // Initialize a new empty tab to receive uniq projects
     const projects = []
 
@@ -37,9 +36,9 @@ router.get('/', (req, res) => {
       result
         .filter((el) => el.id === project)
         .map((el) => {
-          const { name, image_name, ...mainDatas } = el
+          const { name, image_name: imageName, ...mainDatas } = el
           currentProject.mainDatas = mainDatas
-          technos.push({ name, image_name })
+          technos.push({ name, image_name: imageName })
         })
       currentProject.technos = technos
       projects.push(currentProject)
