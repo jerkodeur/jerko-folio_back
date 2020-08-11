@@ -3,6 +3,8 @@ const router = express.Router()
 
 const connexion = require('../conf')
 
+const isDev = process.env.NODE_ENV === 'production'
+
 // fetch all projects
 router.get('/', (req, res) => {
   let sql =
@@ -18,7 +20,7 @@ router.get('/', (req, res) => {
     if (err) {
       return res.status('500').json({
         message: err.message,
-        sql: err.sql
+        sql: isDev && err.sql
       })
     }
     // create a table with uniq project ids
