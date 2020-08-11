@@ -69,6 +69,14 @@ router.get('/:id', (req, res) => {
 // Post a new project
 router.post('/', (req, res) => {
   const { project, techno } = req.body
+  const requiredFields = ['title', 'description', 'image', 'url_github', 'url_test']
+  const missingField = requiredFields.some((field) => !project[field])
+  console.log('missingField', missingField)
+  if (missingField) {
+    return res.status(400).json({
+      message: 'A required field is missing'
+    })
+  }
   project.date = new Date(project.date)
 
   connexion.query('INSERT INTO project SET ?', project, (err, result) => {
