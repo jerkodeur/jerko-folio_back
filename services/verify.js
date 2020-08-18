@@ -8,9 +8,12 @@ const verifyPassword = (req,res,next) => {
       message: err.message,
       sql: err.sql
     })
-    !bcrypt.compareSync(password, result[0].password) ?
-      res.status(401).send('Bad password') :
+    if(!bcrypt.compareSync(password, result[0].password)) {
+      res.status(401).send('Bad password')
+    } else {
+      req.id = result[0].id
       next()
+    }
   })
 }
 
