@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(cors('*'))
 
-app.use('admins', routes.admins)
+app.use('/admins', routes.admins)
 app.use('/projects', routes.projects)
 app.use('/technos', routes.technos)
 

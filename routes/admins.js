@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
-const connexion = require ('../conf')
+const { verifyPassword } = require('../services/verify')
 
-router.post('/', (req,res) => {
-  console.log('Routes connected');
+// Verify if the user have a valid access for connect as administrator
+router.post('/', verifyPassword, (req, res) => {
+  res.status(200).send('Authentified !')
 })
 
-module.export = router
+module.exports = router
